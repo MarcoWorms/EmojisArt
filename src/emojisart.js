@@ -1,4 +1,4 @@
-const ALL_EMOJIS = require("./emojis.json")
+const ALL_EMOJIS = require("./emojis")
 
 const fs = require("fs")
 const path = require("path")
@@ -44,8 +44,8 @@ const reroll = async () => {
   } catch (e) {
     console.log(e)
     clearInterval(id)
-    id = setInterval(reroll, 30000)
+    id = setInterval(reroll, 60000)
   }
 }
 
-let id = setInterval(reroll, 30000)
+let id = setInterval(reroll, 60000)
