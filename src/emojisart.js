@@ -43,8 +43,9 @@ const reroll = async () => {
     return await roll()
   } catch (e) {
     console.log(e)
-    setInterval(reroll, 10000)
+    clearInterval(id)
+    id = setInterval(reroll, 30000)
   }
 }
 
-setInterval(reroll, 30000)
+let id = setInterval(reroll, 30000)
