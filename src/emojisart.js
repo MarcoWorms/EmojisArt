@@ -8,14 +8,7 @@ require.extensions[".txt"] = function (module, filename) {
 
 const randomElement = (array) => array[Math.floor(Math.random() * array.length)]
 
-const patterns = fs
-  .readdirSync(path.join(__dirname, "patterns"), { withFileTypes: true })
-  .filter((item) => !item.isDirectory())
-  .map((item) => item.name)
-  .map((name) => ({
-    name: name.split(".")[0],
-    body: require("./patterns/" + name),
-  }))
+const patterns = require("./patterns/all.txt")
 
 const { TwitterApi } = require("twitter-api-v2")
 
@@ -24,13 +17,13 @@ const userClient = new TwitterApi(require("../config"))
 const rolls = [`⬜️`, `🟩`, `🟥`, `🟦`, `🟫`, `🟧`, `🟨`, `🟪`, `⬛️`, `🔠`]
 
 const roll = () => {
-  const pattern = randomElement(patterns)
+  const pattern = randomElement(patterns.split(/\r\n\r\n/))
 
   const emojis = rolls.map((roll) => randomElement(ALL_EMOJIS))
 
   const msg = rolls.reduce(
     (body, el) => body.replaceAll(el, emojis[rolls.indexOf(el)].emoji),
-    pattern.body
+    pattern
   )
 
   console.log(msg)
